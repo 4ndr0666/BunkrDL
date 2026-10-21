@@ -14,18 +14,16 @@ import platform
 import random
 import shutil
 import sys
-from http.client import RemoteDisconnected
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import requests
+import aiohttp
 from bs4 import BeautifulSoup
-from requests import Response
 
 from .config import (
-    DOWNLOAD_HEADERS,
     FETCH_ERROR_MESSAGES,
     GB,
+    HEADERS,
     MIN_DISK_SPACE_GB,
     HTTPStatus,
 )
@@ -34,53 +32,64 @@ from .url_utils import replace_domain_with_fallback
 if TYPE_CHECKING:
     from src.managers.live_manager import LiveManager
 
-
-def validate_download_link(download_link: str) -> bool:
-    """Check if a download link is accessible."""
-    try:
-        response = requests.head(download_link, headers=DOWNLOAD_HEADERS, timeout=5)
-
-    except requests.RequestException:
-        return False
-
-    return response.status_code != HTTPStatus.SERVER_DOWN
+# Per-session aiohttp timeout: 40 s connect + 40 s read, matching prior requests timeout.
+_AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(total=None, connect=40, sock_read=40)
 
 
 async def fetch_page(url: str, retries: int = 5) -> BeautifulSoup | None:
-    """Fetch the HTML content of a page at the given URL, with retry logic."""
+    """Fetch the HTML content of a page at the given URL, with retry logic.
+
+    Uses aiohttp so the async event loop is never blocked by a synchronous
+    network call (fixes §4.5 chimera: blocking requests.get inside async def).
+    A hard per-request timeout of 40 s is enforced via aiohttp.ClientTimeout
+    (fixes §4.2: no infinite waits on hung connections).
+    """
     tried_fallback = False
-
-    def handle_response(response: Response) -> BeautifulSoup | None:
-        """Process the HTTP response and handles specific status codes."""
-        if response.status_code in FETCH_ERROR_MESSAGES:
-            log_message = FETCH_ERROR_MESSAGES[response.status_code].format(url=url)
-            logging.exception(log_message)
-            return None
-
-        # Use raw bytes to let BS4 detect encoding
-        return BeautifulSoup(response.content, "html.parser")
 
     for attempt in range(retries):
         try:
-            response = requests.Session().get(url, timeout=40)
-            if response.status_code == HTTPStatus.FORBIDDEN and not tried_fallback:
-                tried_fallback = True
-                url = replace_domain_with_fallback(url)
-                continue  # Retry immediately with .cr
+            async with aiohttp.ClientSession(
+                headers=HEADERS,
+                timeout=_AIOHTTP_TIMEOUT,
+            ) as session:
+                async with session.get(url) as response:
+                    status = response.status
 
-            response.raise_for_status()
-            return handle_response(response)
+                    if status == HTTPStatus.FORBIDDEN and not tried_fallback:
+                        tried_fallback = True
+                        url = replace_domain_with_fallback(url)
+                        continue  # Retry immediately with .cr fallback domain
 
-        # Connection dropped unexpectedly by the server
-        except RemoteDisconnected:
-            logging.exception("Remote end closed connection without response.")
+                    if status in FETCH_ERROR_MESSAGES:
+                        log_message = FETCH_ERROR_MESSAGES[status].format(url=url)
+                        logging.warning(log_message)
+                        return None
+
+                    response.raise_for_status()
+                    content = await response.read()
+                    # Use raw bytes to let BS4 detect encoding
+                    return BeautifulSoup(content, "html.parser")
+
+        # asyncio / aiohttp timeout — retryable with backoff
+        except asyncio.TimeoutError:
+            logging.warning("Fetch timed out (attempt %d/%d): %s", attempt + 1, retries, url)
             if attempt < retries - 1:
-                # Add jitter to avoid a retry storm
                 delay = 2 ** (attempt + 1) + random.uniform(1, 2)  # noqa: S311
                 await asyncio.sleep(delay)
 
-        # Catch-all for request-related errors
-        except requests.RequestException:
+        # Server closed connection before sending a response — retryable
+        except aiohttp.ServerDisconnectedError:
+            logging.warning(
+                "Remote end closed connection without response (attempt %d/%d).",
+                attempt + 1,
+                retries,
+            )
+            if attempt < retries - 1:
+                delay = 2 ** (attempt + 1) + random.uniform(1, 2)  # noqa: S311
+                await asyncio.sleep(delay)
+
+        # Catch-all for non-retryable aiohttp / network errors
+        except aiohttp.ClientError:
             return None
 
     return None
@@ -117,7 +126,7 @@ def get_root_path() -> str:
         return os.path.splitdrive(cwd)[0] + "\\"
 
     # Use actual working directory
-    return cwd
+    return str(cwd)
 
 
 def check_disk_space(live_manager: LiveManager, custom_path: str | None = None) -> None:

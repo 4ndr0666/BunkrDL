@@ -9,25 +9,52 @@ Usage:
 """
 
 import asyncio
+import logging
 import sys
 from argparse import Namespace
 
 from downloader import parse_arguments, validate_and_download
 from src.bunkr_utils import get_bunkr_status
 from src.config import SESSION_LOG, URLS_FILE
-from src.file_utils import create_urls_file_backup, read_file, write_file
+from src.file_utils import (
+    create_urls_file_backup,
+    read_file,
+    write_file,
+    write_on_session_log,
+)
 from src.general_utils import check_python_version, clear_terminal
 from src.managers.live_manager import initialize_managers
 
 
 async def process_urls(urls: list[str], args: Namespace) -> None:
-    """Validate and downloads items for a list of URLs."""
-    bunkr_status = get_bunkr_status()
+    """Validate and downloads items for a list of URLs.
+
+    A failure on one URL is contained and logged (session log + live display)
+    so the remaining URLs in the batch still run, matching the documented
+    behavior of logging URLs that encounter errors.
+    """
+    # Fetch the status page off the event loop (one-shot, async-pure call).
+    bunkr_status = await asyncio.to_thread(get_bunkr_status)
     live_manager = initialize_managers(disable_ui=args.disable_ui)
 
     with live_manager.live:
         for url in urls:
-            await validate_and_download(bunkr_status, url, live_manager, args=args)
+            try:
+                await validate_and_download(bunkr_status, url, live_manager, args=args)
+
+            # Contain per-URL failures: log with full traceback and continue
+            # the batch. KeyboardInterrupt/SystemExit are not caught.
+            except Exception as err:  # noqa: BLE001
+                logging.exception("Error downloading from %s", url)
+                write_on_session_log(
+                    f"Error downloading from {url}: {err}",
+                    outcome="BatchError",
+                )
+                live_manager.update_log(
+                    event="URL error",
+                    details=f"Error downloading from {url}: {err}. "
+                    "Continuing with the remaining URLs.",
+                )
 
         live_manager.stop()
 

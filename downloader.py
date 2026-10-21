@@ -82,6 +82,22 @@ async def handle_download_process(
     else:
         download_link, filename = await get_download_info(url, initial_soup)
         live_manager.add_overall_task(identifier, num_tasks=1)
+
+        # The page loaded but no download link could be resolved (unrecognized
+        # page structure or missing CDN metadata): skip gracefully.
+        if download_link is None:
+            live_manager.update_log(
+                event="Service unavailable",
+                details=f"No download link could be resolved for {url}. "
+                "Verify the link and retry.",
+            )
+            live_manager.update_summary(SkippedReason.SERVICE_UNAVAILABLE)
+            write_on_session_log(
+                f"No download link resolved for {url}",
+                reason=SkippedReason.SERVICE_UNAVAILABLE,
+            )
+            return
+
         task = live_manager.add_task()
 
         media_downloader = MediaDownloader(
@@ -94,7 +110,9 @@ async def handle_download_process(
             ),
             live_manager=live_manager,
         )
-        media_downloader.download()
+        # Run the synchronous download in a worker thread so the event loop
+        # is never blocked (fixes §4.5 chimera: sync call inside async def).
+        await asyncio.to_thread(media_downloader.download)
 
 
 async def validate_and_download(
@@ -152,7 +170,8 @@ async def main() -> None:
     clear_terminal()
     check_python_version()
 
-    bunkr_status = get_bunkr_status()
+    # Fetch the status page off the event loop (one-shot, async-pure call).
+    bunkr_status = await asyncio.to_thread(get_bunkr_status)
     args = parse_arguments()
     live_manager = initialize_managers(disable_ui=args.disable_ui)
 
