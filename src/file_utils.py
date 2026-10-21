@@ -73,15 +73,24 @@ def write_on_session_log(
         file.write(f"{entry}\n")
 
 
-def format_directory_name(directory_name: str, directory_id: str | None) -> str | None:
+def format_directory_name(directory_name: str | None, directory_id: str | None) -> str | None:
     """Format a directory name by appending its ID in parentheses if the ID is provided.
 
-    If the directory ID is `None`, only the directory name is returned.
+    Truth table:
+      directory_name=None,  directory_id=None  -> None   (no usable identifier)
+      directory_name=None,  directory_id=str   -> str    (fall back to ID only)
+      directory_name=str,   directory_id=None  -> str    (name only; was returning
+                                                           None, causing downstream
+                                                           TypeError in sanitize_directory_name)
+      directory_name=str,   directory_id=str   -> "name (id)"
     """
     if directory_name is None:
         return directory_id
 
-    return f"{directory_name} ({directory_id})" if directory_id is not None else None
+    if directory_id is None:
+        return directory_name
+
+    return f"{directory_name} ({directory_id})"
 
 
 def sanitize_directory_name(directory_name: str) -> str:

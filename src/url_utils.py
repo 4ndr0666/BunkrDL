@@ -50,13 +50,18 @@ def replace_domain_with_fallback(url: str) -> str:
 
 
 def check_url_type(url: str) -> bool:
-    """Determine whether the provided URL corresponds to an album or a single file."""
+    """Determine whether the provided URL corresponds to an album or a single file.
+
+    Exits with status 1 on URLs too short to carry a type segment (previously
+    fell through with an unbound `url_type`, crashing with UnboundLocalError).
+    """
     try:
         url_type = url.rstrip("/").split("/")[-2]
 
     except IndexError:
         log_message = f"Invalid URL format for: {url}"
         logging.exception(log_message)
+        sys.exit(1)
 
     if url_type in URL_TYPE_MAPPING:
         return URL_TYPE_MAPPING[url_type]
@@ -161,18 +166,6 @@ def get_album_name(soup: BeautifulSoup) -> str | None:
         return fixed_album_name
 
     return unescaped_album_name
-
-
-def get_item_type(item_page: str) -> str | None:
-    """Extract the type of item (album or single file) from the item page URL."""
-    try:
-        return item_page.rstrip("/").split("/")[-2]
-
-    except AttributeError:
-        log_message = f"Error extracting the item type from {item_page}"
-        logging.exception(log_message)
-
-    return None
 
 
 def get_url_based_filename(item_download_link: str) -> str:

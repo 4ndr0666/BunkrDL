@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import re
 from pathlib import Path
@@ -14,6 +15,11 @@ from src.general_utils import fetch_page
 from src.url_utils import get_url_based_filename
 
 from .api_utils import get_api_response
+
+# Hard timeout applied to every aiohttp.ClientSession used for signed-URL resolution.
+# Prevents a hung CDN from holding the session open indefinitely (fixes §4.4 /§4.2:
+# no timeout on the inner session.get inside get_item_download_link).
+_API_SESSION_TIMEOUT = aiohttp.ClientTimeout(total=None, connect=20, sock_read=20)
 
 
 def extract_next_album_pages(initial_soup: BeautifulSoup, url: str) -> list[str] | None:
@@ -86,10 +92,22 @@ async def get_item_download_link(
     item_url: str,
     soup: BeautifulSoup | None = None,
 ) -> str | None:
-    """Retrieve a signed direct download URL for a Bunkr item page."""
+    """Retrieve a signed direct download URL for a Bunkr item page.
+
+    When no soup is supplied the page is fetched inline; transport failures
+    are logged and return None instead of propagating (previously an
+    unhandled aiohttp error escaped to callers that only catch requests
+    exceptions).
+    """
     if soup is None:
-        async with session.get(item_url) as response:
-            html = await response.text()
+        try:
+            async with session.get(item_url) as response:
+                html = await response.text()
+
+        except (aiohttp.ClientError, asyncio.TimeoutError) as fetch_err:
+            log_message = f"Failed to fetch item page {item_url}: {fetch_err}"
+            logging.warning(log_message)
+            return None
 
         soup = BeautifulSoup(html, "html.parser")
 
@@ -105,12 +123,21 @@ def decrypt_cf_email(cf_email_hex: str) -> str:
     return decrypted_bytes.decode("utf-8")
 
 
-def get_item_filename(item_soup: BeautifulSoup) -> str:
-    """Extract the filename from the provided HTML soup."""
+def get_item_filename(item_soup: BeautifulSoup) -> str | None:
+    """Extract the filename from the provided HTML soup.
+
+    Returns None when the expected filename container is missing from the
+    page (previously raised AttributeError on the None container).
+    """
     item_filename_container = item_soup.find(
         "h1",
         {"class": "text-subs font-semibold text-base sm:text-lg truncate"},
     )
+
+    if item_filename_container is None:
+        log_message = "Filename container not found in item page."
+        logging.warning(log_message)
+        return None
 
     # Decrypt Cloudflare email protection if present
     cf_email_tag = item_filename_container.find(class_="__cf_email__")
@@ -152,16 +179,31 @@ def format_item_filename(original_filename: str, url_based_filename: str) -> str
 
 
 async def get_download_info(item_url: str, item_soup: BeautifulSoup) -> tuple:
-    """Gather download information (link and filename) for the item."""
-    async with aiohttp.ClientSession() as session:
+    """Gather download information (link and filename) for the item.
+
+    A hard per-session timeout is applied to the aiohttp.ClientSession so that a
+    hung CDN or signed-URL endpoint cannot hold the coroutine open indefinitely
+    (fixes §4.4 / §4.2: missing timeout on API session).
+
+    Returns (None, None) when no download link or no parsable filename could be
+    resolved, so callers can skip the item gracefully instead of crashing
+    downstream on None values.
+    """
+    async with aiohttp.ClientSession(timeout=_API_SESSION_TIMEOUT) as session:
         item_download_link = await get_item_download_link(
             session, item_url, soup=item_soup,
         )
 
+    if item_download_link is None:
+        return None, None
+
     item_filename = get_item_filename(item_soup)
-    url_based_filename = (
-        get_url_based_filename(item_download_link) if item_download_link else None
-    )
+    if item_filename is None:
+        log_message = f"Skipping item without a parsable filename: {item_url}"
+        logging.warning(log_message)
+        return None, None
+
+    url_based_filename = get_url_based_filename(item_download_link)
     formatted_item_filename = (
         format_item_filename(item_filename, url_based_filename)
         if url_based_filename

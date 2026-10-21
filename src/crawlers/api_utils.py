@@ -28,9 +28,13 @@ def extract_page_vars(soup: BeautifulSoup) -> dict[str, str]:
 
 
 def extract_file_id(soup: BeautifulSoup) -> str | None:
-    """Extract the file identifier from the page's script tag."""
+    """Extract the file identifier from the page's script tag.
+
+    Returns None when no script tag exists or the tag carries no
+    ``data-file-id`` attribute (previously raised KeyError).
+    """
     script = soup.find("script")
-    return script["data-file-id"] if script else None
+    return script.get("data-file-id") if script else None
 
 
 async def get_download_response(session: aiohttp.ClientSession, file_id: str) -> str:
@@ -64,11 +68,15 @@ async def get_api_response(
     async with session.get(BUNKR_API, params={"path": media_path}) as response:
         signature_data = await response.json()
 
-    base_url = cdn_url if cdn_url else unsigned_media_url
+    base_url = cdn_url or unsigned_media_url
     token = signature_data.get("token")
     expires_at = signature_data.get("ex")
 
-    if token and expires_at:
+    # A signed URL requires a concrete base URL; without jsCDN metadata or a
+    # direct-download fallback there is nothing to sign (previously produced
+    # the garbage link "None?token=...").
+    if token and expires_at and base_url:
         return f"{base_url}?token={token}&ex={expires_at}"
 
-    return cdn_url
+    # No signature was issued: prefer the unsigned direct URL over None.
+    return cdn_url or unsigned_media_url
