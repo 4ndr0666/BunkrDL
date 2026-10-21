@@ -32,8 +32,22 @@ def save_file_with_progress(
     Add a `.temp` extension if the download is partial. Handles network interruptions
     such as IncompleteRead and ConnectionResetError (wrapped in ChunkedEncodingError)
     by marking the download as incomplete.
+
+    If an unexpected exception is raised mid-write (e.g. OSError, MemoryError) the
+    .temp file is cleaned up before re-raising, preventing orphaned partial files on
+    disk (fixes §4.4: missing reclamation path for non-ChunkedEncodingError failures).
+
+    When Content-Length is absent or unparsable (file_size <= 0) progress updates
+    are skipped (previously produced negative percentages) and a clean end-of-stream
+    is treated as a complete download (previously always marked partial, forcing
+    pointless retries and an eventual false failure).
     """
-    file_size = int(response.headers.get("Content-Length", -1))
+    try:
+        file_size = int(response.headers.get("Content-Length", -1))
+
+    except (TypeError, ValueError):
+        file_size = -1
+
     if file_size == -1:
         logging.warning("Content length not provided in response headers.")
 
@@ -41,6 +55,7 @@ def save_file_with_progress(
     temp_download_path = Path(download_path).with_suffix(".temp")
     chunk_size = get_chunk_size(file_size)
     total_downloaded = 0
+    write_succeeded = False
 
     try:
         with temp_download_path.open("wb") as file:
@@ -48,15 +63,33 @@ def save_file_with_progress(
                 if chunk is not None:
                     file.write(chunk)
                     total_downloaded += len(chunk)
-                    completed = (total_downloaded / file_size) * 100
-                    progress_manager.update_task(task, completed=completed)
+                    # Update progress only when the total size is known;
+                    # otherwise the percentage would be negative/meaningless.
+                    if file_size > 0:
+                        completed = (total_downloaded / file_size) * 100
+                        progress_manager.update_task(task, completed=completed)
+
+        write_succeeded = True
 
     # Handle partial downloads caused by network interruptions
     except ChunkedEncodingError:
         return True
 
-    # Rename temp file to final filename if fully downloaded
-    if total_downloaded == file_size:
+    finally:
+        # If write_succeeded is False here, an unexpected exception escaped the
+        # try block (or ChunkedEncodingError was caught above).  For the
+        # unexpected-exception case, remove the orphaned .temp file before the
+        # exception propagates to the caller.
+        if not write_succeeded and temp_download_path.exists():
+            try:
+                temp_download_path.unlink()
+            except OSError:
+                pass  # Best-effort cleanup; do not mask the original exception.
+
+    # Rename temp file to final filename if fully downloaded.  When the
+    # Content-Length is unknown (file_size == -1), a clean end-of-stream means
+    # the body was fully transferred (e.g. chunked transfer encoding).
+    if total_downloaded == file_size or file_size == -1:
         shutil.move(temp_download_path, download_path)
         return False
 

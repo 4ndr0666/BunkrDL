@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING
 
 import requests
 from requests import RequestException
+from requests.exceptions import ConnectionError as RequestsConnectionError
 
 from src.bunkr_utils import mark_subdomain_as_offline, subdomain_is_offline
 from src.config import (
@@ -107,7 +108,7 @@ class MediaDownloader:
         try:
             failed_download = self.attempt_download(final_path)
 
-        except requests.exceptions.ConnectionError:
+        except RequestsConnectionError:
             self.live_manager.update_log(
                 event="Connection error",
                 details=f"Read timed out for {self.download_info.filename}",
@@ -202,31 +203,39 @@ class MediaDownloader:
     def _handle_request_exception(
         self, req_err: RequestException, attempt: int,
     ) -> bool:
-        """Handle exceptions during the request and manages retries."""
-        is_server_down = (
-            req_err.response is None
-            or req_err.response.status_code in (
-                HTTPStatus.SERVER_DOWN,
-                HTTPStatus.SERVICE_UNAVAILABLE,
-            )
-        )
+        """Handle exceptions during the request and manages retries.
 
-        # Mark the subdomain as offline and exit the loop
-        if is_server_down:
+        Network-layer failures (response is None: DNS errors, connection refused,
+        SSL errors, timeouts at the socket level) are treated as transient and
+        retried with backoff.  Only confirmed HTTP 521 / 503 status codes from the
+        server trigger subdomain offline marking (fixes §4.2: prior logic collapsed
+        all response-less errors into the offline-mark branch, causing mass false
+        positives observed in session logs with 1931+ domains marked offline).
+        """
+        # response is None means a network-layer failure (not an HTTP error).
+        # Treat as retryable rather than marking the subdomain offline.
+        if req_err.response is None:
+            return self._retry_with_backoff(attempt, event="Network error")
+
+        status = req_err.response.status_code
+
+        # Confirmed server-down HTTP codes: mark subdomain offline and stop retrying.
+        if status in (HTTPStatus.SERVER_DOWN, HTTPStatus.SERVICE_UNAVAILABLE):
             marked_subdomain = mark_subdomain_as_offline(
                 self.session_info.bunkr_status,
                 self.download_info.download_link,
             )
             self.live_manager.update_log(
                 event="No response",
-                details=f"Subdomain '{marked_subdomain}' has been marked as offline.",
+                details=f"Subdomain '{marked_subdomain}' has been marked as offline "
+                f"(HTTP {status}).",
             )
             return False
 
-        if req_err.response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+        if status == HTTPStatus.TOO_MANY_REQUESTS:
             return self._retry_with_backoff(attempt, event="Retrying download")
 
-        if req_err.response.status_code == HTTPStatus.BAD_GATEWAY:
+        if status == HTTPStatus.BAD_GATEWAY:
             self.live_manager.update_log(
                 event="Server error",
                 details=f"Bad gateway for {self.download_info.filename}.",
