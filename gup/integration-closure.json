@@ -1,0 +1,50 @@
+{
+  "protocol": "GUP v7.0.1 integration-closure ledger (nine surfaces)",
+  "round": "WO-001 bug-fix round (BunkrDL v1.2.2 -> v1.2.3)",
+  "surfaces": {
+    "entry_points": {
+      "disposition": "CLOSED",
+      "evidence": "Two entry points: main.py (batch mode: reads URLs.txt, clears it after) and downloader.py (single-URL CLI). Both compile, import, and are exercised by the suite (TestBatchContainment drives process_urls; downloader functions are imported and their units tested). Argument surface unchanged: --custom-path, --no-download-folder, --disable-ui, --disable-disk-check, --max-retries, --version, url, --ignore, --include."
+    },
+    "loaders": {
+      "disposition": "CLOSED",
+      "evidence": "Python import graph fully closed: every module under src/ is imported by at least one other tracked module or an entry point (verified via import-gate in tools/check.sh, which imports all 17 modules). No dynamic imports remain (the lazy 'from pathlib import Path' inside get_root_path was lifted to module scope)."
+    },
+    "callers": {
+      "disposition": "CLOSED",
+      "evidence": "Call-graph search over all tracked files: every non-dunder function/method has at least one call site, except the two authorized removals (validate_download_link, get_item_type) which were removed this round (see gup/semantic-review.json authorized_removals). LiveManager.start() is the public lifecycle complement of stop() (Live is normally driven by the context manager); retained as deliberate public API."
+    },
+    "providers": {
+      "disposition": "CLOSED",
+      "evidence": "External providers: aiohttp (page fetch + sign API), requests (media download + status page), bs4 (parsing), rich (UI). All four are declared in requirements.txt and import-verified. Internal providers: config.py constants consumed by every consumer listed in the manifest; bunkr_utils status dict produced by get_bunkr_status and consumed by MediaDownloader/subdomain checks."
+    },
+    "consumers": {
+      "disposition": "CLOSED",
+      "evidence": "Every consumer chain terminates in a provider: crawler chain (fetch_page -> extract_* -> get_download_info) feeds MediaDownloader; MediaDownloader feeds save_file_with_progress; managers consume DownloadInfo/task IDs. The (None, None) contract added to get_download_info has exactly two consumers (AlbumDownloader.execute_item_download, downloader.handle_download_process), both now guard the None link explicitly."
+    },
+    "configuration_paths": {
+      "disposition": "CLOSED",
+      "evidence": "Single canonical configuration source: src/config.py (constants, dataclasses, arg parsing). No legacy/archived config files exist in the tree. HEADERS/DOWNLOAD_HEADERS/timeout constants all consumed (DOWNLOAD_HEADERS by media_downloader, HEADERS by bunkr_utils + general_utils). The orphaned DOWNLOAD_HEADERS import in general_utils was removed with its dead consumer."
+    },
+    "install_migration_paths": {
+      "disposition": "CLOSED",
+      "evidence": "Installation surface: requirements.txt (aiohttp==3.14, beautifulsoup4==4.14.3, Requests==2.34.2, rich==15.0.0) - no migration code in the project; the update kit's payload IS the migration path and is battery-tested (P1-P7). No version-skew issues: Python >=3.10 required (check_python_version), suite runs on 3.12."
+    },
+    "tests": {
+      "disposition": "CLOSED",
+      "evidence": "Baseline had ZERO tests; this round adds tests/test_bunkr_suite.py (51 tests) wired into the certification gate tools/check.sh (exit code + 'GUP VERIFICATION: CERTIFIED' line) which the update kit executes at G4. Suite runs offline (all network mocked), runs under `python3 -m unittest discover -s tests`, and is invoked by CI-equivalent (the kit battery + gate)."
+    },
+    "runtime_dependencies": {
+      "disposition": "CLOSED",
+      "evidence": "Runtime deps = requirements.txt four packages + Python 3.10+ stdlib (asyncio, argparse, pathlib, logging, re, shutil, sys, os, platform, random, time, datetime, collections, enum, dataclasses, contextlib, urllib.parse, http.client [removed with dead code], typing). Unused stdlib imports removed this round (http.client.RemoteDisconnected, pathlib lazy import). No undeclared third-party imports exist (import-gate proves importability)."
+    }
+  },
+  "findings_closed_this_round": [
+    "Dangling 'env' symlink to /home/andro/.local/share/virtualenv/venv (orphaned reference from the authoring machine) removed from the working tree (untracked, gitignored).",
+    "Binary assets (assets/demo.gif, assets/logo_bunkr-9Kl5M1Y.svg) absent from the delivered archive restored from git - the certified tree does NOT delete operator assets.",
+    "Zero-test certification gap closed with a 51-test offline suite + gate script.",
+    "Two dead functions removed under WO-001 authorization.",
+    "Three crash paths (UnboundLocalError, KeyError, AttributeError) and two garbage-output paths ('None?token=...', negative progress) eliminated.",
+    "Blocking sync calls inside async coroutines (fetch_page requests.get; downloader.py media_downloader.download; get_bunkr_status at startup) moved off the event loop."
+  ]
+}

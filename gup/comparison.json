@@ -1,0 +1,1995 @@
+{
+  "protocol": "GUP v7.0.1 / atomizer v2.2.0",
+  "baseline_ref": "1fec96025de003227aa765e0d66b38d69a42bdf2",
+  "files_compared": [
+    "main.py",
+    "downloader.py",
+    "src/config.py",
+    "src/version.py",
+    "src/__init__.py",
+    "src/bunkr_utils.py",
+    "src/file_utils.py",
+    "src/general_utils.py",
+    "src/url_utils.py",
+    "src/crawlers/__init__.py",
+    "src/crawlers/api_utils.py",
+    "src/crawlers/crawler_utils.py",
+    "src/downloaders/__init__.py",
+    "src/downloaders/album_downloader.py",
+    "src/downloaders/download_utils.py",
+    "src/downloaders/media_downloader.py",
+    "src/managers/__init__.py",
+    "src/managers/live_manager.py",
+    "src/managers/log_manager.py",
+    "src/managers/progress_manager.py",
+    "src/managers/summary_manager.py"
+  ],
+  "unit_counts": {
+    "CHANGED": 20,
+    "UNCHANGED": 99,
+    "MISSING": 3
+  },
+  "diff": [
+    {
+      "file": "downloader.py",
+      "unit": "handle_download_process",
+      "verdict": "CHANGED",
+      "baseline_hash": "b9ce58bd238ed1ad6cd8616d7e6575e4ee09f26a67247aa47860e4379b23daaf",
+      "candidate_hash": "c36938560f26ebabb9a8c02a7de6030f64c1900f53eed9d925e5cb175b329f1c"
+    },
+    {
+      "file": "downloader.py",
+      "unit": "main",
+      "verdict": "CHANGED",
+      "baseline_hash": "3581e3bc0614fe702c4dc6429dd0fcb33634f856de286bbc99ec136e03b2d6aa",
+      "candidate_hash": "aec040d96dc7fe1242a4b695d7252d04fcc80c6a37b62f9a2e3c234f0c5c62b2"
+    },
+    {
+      "file": "downloader.py",
+      "unit": "validate_and_download",
+      "verdict": "UNCHANGED",
+      "hash": "3665bec499795e8bcc9a07d3e9bb150cf12b1b871dc20f86f56fbf5c4bfc4534"
+    },
+    {
+      "file": "main.py",
+      "unit": "main",
+      "verdict": "UNCHANGED",
+      "hash": "514cf4ff04900c381f21c770517f528742d332aa4fd6ed2f4e04dc5168037a41"
+    },
+    {
+      "file": "main.py",
+      "unit": "process_urls",
+      "verdict": "CHANGED",
+      "baseline_hash": "7613644fec021914d231505447a75dbe9f65a0959a4494584512c478c676cac6",
+      "candidate_hash": "1e177e49bf985b4d8ba689bb2818f92a5fe783cfd674683a349eb4d57122b1a3"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "fetch_page",
+      "verdict": "UNCHANGED",
+      "hash": "74c47ae159108846b162006a923df899c10aa8b2ee37036cc327dc2b8418b3db"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_bunkr_status",
+      "verdict": "UNCHANGED",
+      "hash": "9443369900bcd18eae91dcefa3c57c1c6aab60547720ce010018447d0254c9bb"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_offline_servers",
+      "verdict": "UNCHANGED",
+      "hash": "14dfb08dfd1c3568207572a3e4c358a9f1388953b093155845dd1a5fdd09d58c"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_subdomain",
+      "verdict": "UNCHANGED",
+      "hash": "a4201b8cc62cf6e1cf303fc579ceb2c79e9c047ce7e61e2b827c42024ccd993b"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "mark_subdomain_as_offline",
+      "verdict": "UNCHANGED",
+      "hash": "1666fc4d06e129b8b81b094cf9b1c1bed1bb0bb67c136abe233fa13b690cad5e"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "subdomain_is_offline",
+      "verdict": "UNCHANGED",
+      "hash": "746992aa2805d346758bd6f1a222b5692ef46f733593ec23d786422b907079d2"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "AlbumInfo",
+      "verdict": "UNCHANGED",
+      "hash": "218df14fec7828f486e48259e1a066f32c8371062ff4c8f4bc490e03e9d3c574"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "CompletedReason",
+      "verdict": "UNCHANGED",
+      "hash": "0e409a3e5b2389932dee2fa92b44a6c9c6fa25d5ea59503e61c6fcd741f53df8"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "DownloadInfo",
+      "verdict": "UNCHANGED",
+      "hash": "3cc2bff22025b810762328d45d944b458b0e184ad4285973ccbe69135923d551"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "FailedReason",
+      "verdict": "UNCHANGED",
+      "hash": "b5508eeee9fb7d2040c1d64fb85b4c1f99e96d38701d0001b13c4a2402dacd57"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "HTTPStatus",
+      "verdict": "UNCHANGED",
+      "hash": "87b2dc5f4070e4f56c3a1ecd58277b9a6aeadc9d05ddfa046d7ece9654ddf85f"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "ProgressConfig",
+      "verdict": "UNCHANGED",
+      "hash": "7e165856bb44c66ecee8170823904e4ccf8332dcd58a31902a20a1e1b07df903"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "SessionInfo",
+      "verdict": "UNCHANGED",
+      "hash": "84f2d7df2e953ea99458dcd6c7a9409a16416d5fd6a776368eb8e1cfdb737b40"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "SkippedReason",
+      "verdict": "UNCHANGED",
+      "hash": "a0c1bd3e6f605ada193f42717962c4837b25b375bc27c3e7f7bd661ffbb31cf9"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "TaskReason",
+      "verdict": "UNCHANGED",
+      "hash": "cc08c468397ceaf50c1dcc87a22f04ca63f52469f88b2c513d61065a4f63c32b"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "TaskResult",
+      "verdict": "UNCHANGED",
+      "hash": "556de48824d091b48f539a04a774387dee3e096487e640656abaef1d7e1a6c7f"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "add_common_arguments",
+      "verdict": "UNCHANGED",
+      "hash": "77e58e718f98b026467cd8d9212057798bcabdbadfb09742f91d407598bacc0c"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "parse_arguments",
+      "verdict": "UNCHANGED",
+      "hash": "1f2875152fef66777976ad31afa802cdc37703574f7971448306222799bb3e42"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "setup_parser",
+      "verdict": "UNCHANGED",
+      "hash": "35f38a0a6001e1d74ab08720a235c8a346a43d5b6d9ac3f4230e32fe9bbdb2c3"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "extract_file_id",
+      "verdict": "CHANGED",
+      "baseline_hash": "b3557850316605d71deb8e3f2d3755c11139cda6ec5e82b6d94c44d7d25b3a38",
+      "candidate_hash": "f9eb075dd53cd228fff7dc356bc40ef903d21f643d30ca02eb09451b469cf8d2"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "extract_page_vars",
+      "verdict": "UNCHANGED",
+      "hash": "b3cfb15ba009e3ec2149e4e27333e0b5a110c47d21fb20c5fdfc93cde8babf93"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "get_api_response",
+      "verdict": "CHANGED",
+      "baseline_hash": "16d7ebf406cd51919c93d2ed6098f67410cbbaa42992b7950ec634a79086e097",
+      "candidate_hash": "bce89d170a665d9add357d26dd6c2530f744a160e413eaca5bafde270fcef7df"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "get_download_response",
+      "verdict": "UNCHANGED",
+      "hash": "2aa431e6f7d455a4e6341616c275568815e37bdcecd8c6d9ff66e0b47179a018"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "unescape_js_path",
+      "verdict": "UNCHANGED",
+      "hash": "e75e950e3730199a3c9c528cef73c35e57292d195d24e5ec14ce24ade56e6d75"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "decrypt_cf_email",
+      "verdict": "UNCHANGED",
+      "hash": "4d945411e4da7229b6f750c72dafa014883c134013254f532d1382b2d811405a"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_all_album_item_pages",
+      "verdict": "UNCHANGED",
+      "hash": "fb5e4602c9fd54254e436fe31ba7948e6dbe960c6f70d5627e7423e0ccda36d0"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_item_pages",
+      "verdict": "UNCHANGED",
+      "hash": "6477bd418cb0be86afca037c5fd58751c716c194de4fd9f1cdc2f9b2b35a5c35"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_next_album_pages",
+      "verdict": "UNCHANGED",
+      "hash": "b07a1f7868d94e160fc24ef342a8898fe1fb1cbf9f8f85165ae2d695526883b0"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "format_item_filename",
+      "verdict": "UNCHANGED",
+      "hash": "25c8e78a5925ec1d9f248d2ff2d28a0f8343a25e006ba8da46de1ae6e6f8f0cd"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_download_info",
+      "verdict": "CHANGED",
+      "baseline_hash": "87e2f3ec4ede934c7ef7688938cc5c10ac09d14f22c037a5d3ac9893c7039f44",
+      "candidate_hash": "6bb4879ec2bcc849f1963a95c9157591834edfea0e59e39e95840426f52a0e83"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_item_download_link",
+      "verdict": "CHANGED",
+      "baseline_hash": "2e91bc0e1583baa1367b314963335122fc881526effbdbfa7b1ee4e798478e1f",
+      "candidate_hash": "7651d9143231760b09dde64b12f02547b11475ba29d4568e0ec5cfa1167aa405"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_item_filename",
+      "verdict": "CHANGED",
+      "baseline_hash": "2c9757bb23e0d3290dc237c2112e7397c52786894232335fda9b9e738b4a1c6d",
+      "candidate_hash": "6ef738db1be8a74929e0a7c8b99b33d5955ed0c2bba18666e8ea31357fd854f4"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader",
+      "verdict": "CHANGED",
+      "baseline_hash": "89da8e988a0302390c8166b427fad3ec625ea27bda47299a2a14dbfd58defed1",
+      "candidate_hash": "eb9a7e7ad556fc827bebb5fa1a923b00ae6245a8d3aba7b1c979b6ae4a1cd7ec"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.__init__",
+      "verdict": "UNCHANGED",
+      "hash": "6a5298ab1d61dd855e46c33720d5aa2c373061b4fff37db35ea25055aad015e9"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._fetch_page_with_retries",
+      "verdict": "CHANGED",
+      "baseline_hash": "195ce94fb782d94e8f74aa108b8cde9983b5718ba075fc770177af5575a41a9d",
+      "candidate_hash": "883a813a249de66c1e170b0b7a6474ec65102e6fef8fe3026e03d684744318aa"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._process_failed_downloads",
+      "verdict": "UNCHANGED",
+      "hash": "b22ee028b8dfef690c8db36d39da68a01694d65be640c33187a3688d3ef039a2"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._retry_failed_download",
+      "verdict": "UNCHANGED",
+      "hash": "8677040eabce36369f7a018c5987ec5811b57af8e8131a6ff80d7f2f98a83e63"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.download_album",
+      "verdict": "CHANGED",
+      "baseline_hash": "98c550e07074b003dc54a81e34b7aa6ff8cdb55d56fee6b1286daa7adedd5c6f",
+      "candidate_hash": "3d458a5ffaa1d2814eb90988875c363300e4209190fbb1b94478acd62873aaf4"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.execute_item_download",
+      "verdict": "CHANGED",
+      "baseline_hash": "a16901284686a492d21eb74cb5fd28ec914527d0f7d9e2770956632213426f6c",
+      "candidate_hash": "80e54330a35d60dfa6f9e180f7ffe12963fb48ee4b13f171907a0500b5031ad6"
+    },
+    {
+      "file": "src/downloaders/download_utils.py",
+      "unit": "get_chunk_size",
+      "verdict": "UNCHANGED",
+      "hash": "de7b631d1f3ac5a6f232e52c8f88298bfffebc3341170595cf45f209fa29b37b"
+    },
+    {
+      "file": "src/downloaders/download_utils.py",
+      "unit": "save_file_with_progress",
+      "verdict": "CHANGED",
+      "baseline_hash": "d290db855bc1df6a1bd067f4fbafcc5307e0b4e719e05a197b1c04e51766ded4",
+      "candidate_hash": "515d36dbdf58f4a9c860642456d23f95c16c3036f92d5f75e885b30f49edfae4"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader",
+      "verdict": "CHANGED",
+      "baseline_hash": "7448fbbe4f311dc076caf8c79df80a615a78961aa918b164aaad8a6feb866165",
+      "candidate_hash": "1f6a1826c48b41d532af2c015dc38c8bcc9536aceb28e667934176600decb704"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.__init__",
+      "verdict": "UNCHANGED",
+      "hash": "f4810bd0ab4f9005e0d3cfdd320bc2f295be20955ed1aaa53b8c1fdefa57b0d2"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._finalize_download",
+      "verdict": "UNCHANGED",
+      "hash": "1b0fbed47234ec68b271ce6504e30591b05217557659d03f73bf806ace0b904c"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._handle_failed_download",
+      "verdict": "UNCHANGED",
+      "hash": "7768b2414a0146c647c4bd64e435ef4f3d4fd099c4b6e3c9fd7e015beabe51b5"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._handle_request_exception",
+      "verdict": "CHANGED",
+      "baseline_hash": "4b5a75f0eb0c72f9564dd827a3e59563288c09ad5d9b85e51bc1b1416c66074d",
+      "candidate_hash": "1a4a50c5c8529637127edc79482ff47321d47622d92b44e073d0a1c5042b1a19"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._retry_with_backoff",
+      "verdict": "UNCHANGED",
+      "hash": "8b4544e74e4582284ffa7e2a91c5f5f2e352f85a45b75d0c6f22aa6f9a1c937a"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._skip_file_download",
+      "verdict": "UNCHANGED",
+      "hash": "938838ce2b76212e2d3c53865ee04eeed4595ab78f5cb8d3a9ed9293e054eb75"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._skip_file_download.log_and_skip_event",
+      "verdict": "UNCHANGED",
+      "hash": "6b1ce76c39f4720a80ef662c00e3dbc065e582ae10e4bd587e62979fc2cab8ef"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.attempt_download",
+      "verdict": "UNCHANGED",
+      "hash": "bc9bd04f00c97fcc26cfe5ec972358475b5ab3e4734861f1ecb32589cc702b6e"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.download",
+      "verdict": "CHANGED",
+      "baseline_hash": "7d4df7050020088a4a2c926f614f0b67bb1cd15188a46c0901efbad3b48d6c54",
+      "candidate_hash": "574069503f748aa81e721748827f522d6af5c9fdb36addac356d684acdad86c8"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "create_download_directory",
+      "verdict": "UNCHANGED",
+      "hash": "618801cce1e474c137d49b7ed6f90348c122e2d9b27e40105f262c67316c5d75"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "create_urls_file_backup",
+      "verdict": "UNCHANGED",
+      "hash": "9467c984b3dfb609aedeea639abce78de2b164fe3ca4e8a3706cadd1d14e9432"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "format_directory_name",
+      "verdict": "CHANGED",
+      "baseline_hash": "72fef8db6de13d1938cba62dcd1ce4db6ccac722363502e7db38d9486d40811d",
+      "candidate_hash": "4de066987be17782fd5637bb82d1e6f811f3781da006d777e2422e3b29bfed49"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "read_file",
+      "verdict": "UNCHANGED",
+      "hash": "b187895b9b91828c10e11db141fd62c30d5955f01d00e2d83330cf1ecbf89472"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "remove_invalid_characters",
+      "verdict": "UNCHANGED",
+      "hash": "183c7e0172267523fd4bfad13c829a83b310516199e1b509c5953ccf50da534f"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "sanitize_directory_name",
+      "verdict": "UNCHANGED",
+      "hash": "7d262ee91b22b8b262cf765bb71633dec80e24f3a287604fc3f82b4bcdf3bc6f"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "truncate_filename",
+      "verdict": "UNCHANGED",
+      "hash": "f4aae748add2dcf029a6b45a3b1f3eb0573c9f5d04ab7cb93e7ec10a56dfcbec"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "write_file",
+      "verdict": "UNCHANGED",
+      "hash": "51fbcdf94f12b54bb5b9a24f730b6278368259f7ee62d82cf9b54302f04231af"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "write_on_session_log",
+      "verdict": "UNCHANGED",
+      "hash": "f17aef342ff03ff814a4aded79407d38c1b4047e7e921ee7ba915b2ca9d23d32"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "check_disk_space",
+      "verdict": "UNCHANGED",
+      "hash": "df4672d0356051812c4745f1617be03a9c6f929564f1194bbe6e011383a2b65a"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "check_python_version",
+      "verdict": "UNCHANGED",
+      "hash": "c82b3c4c712076d073ad9a957614ec391884492027dbad7aea558bff1a686641"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "clear_terminal",
+      "verdict": "UNCHANGED",
+      "hash": "af055d12eb68dfc321d6e3caaeef78e18b5f496f9273b3d92442e10eeeaa669e"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "fetch_page",
+      "verdict": "CHANGED",
+      "baseline_hash": "d35b0d3314901cfbbf540abe04eb3cedbf25c04c793efb66241d818b5866a516",
+      "candidate_hash": "0b235bf43238d2fb87b5a36920d14a44833a5c189b92b139e7fcb2cbbd432d04"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "fetch_page.handle_response",
+      "verdict": "MISSING",
+      "hash": "bfab7b3d36cfd754194b015534da5399909e4f824cb3de508ae4487c2907cd41"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "get_root_path",
+      "verdict": "CHANGED",
+      "baseline_hash": "9081a6a54709ce5d7a1892337969a061d068f53a470de863ad99fc7fb8f6fb7b",
+      "candidate_hash": "8a8a187794da8cfa23dfb868be8575ce22fa1f759a219c1481a0fcce0e50dcfa"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "validate_download_link",
+      "verdict": "MISSING",
+      "hash": "c42b42aeeb728fd3bfd43044462fa3201446a91290e84d5482d26faedcfb783f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager",
+      "verdict": "UNCHANGED",
+      "hash": "94add22a50db998fe88e0baada704084a78f063f3877c88611e46295c8898828"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.__init__",
+      "verdict": "UNCHANGED",
+      "hash": "a32abf10f6cbcb2cf5924ac2b03f37bc04f6ed385cdca8c333d569b69297153f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._compute_execution_time",
+      "verdict": "UNCHANGED",
+      "hash": "c89552ccc3e803e761abaa31f5d3a4e234c824cdc3ed629bf48a5f4c3f343706"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._log_results_summary",
+      "verdict": "UNCHANGED",
+      "hash": "7bf6e41f2562d4c8c4ea21feee4b2f7870e20381feefd63eeb5b2810810e34ff"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._log_results_summary.log_reason",
+      "verdict": "UNCHANGED",
+      "hash": "4beeefae2033ee977476157a5cca9c7e8d055278bbf980e7797e093e1f3f641e"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._render_live_view",
+      "verdict": "UNCHANGED",
+      "hash": "18dccb44bd3e89d9ee1064d46f427773c6b2fadae9a611ff134413c7e80889f2"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.add_overall_task",
+      "verdict": "UNCHANGED",
+      "hash": "3652a596a916129af8b5d57204146e889dfb4fb6f65c5bad53afa94d7b7cd11b"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.add_task",
+      "verdict": "UNCHANGED",
+      "hash": "8ed93b2b0e7b04edc1abeed5f44c72707b76b846962984a1ef5d78d1587f9bed"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.start",
+      "verdict": "UNCHANGED",
+      "hash": "b4ee21ace8e3b3b76cb6bd1986751cf7036acd0b54cd640c095b801dd287c3e5"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.stop",
+      "verdict": "UNCHANGED",
+      "hash": "cdb8a7766a1a5f74d76383b841d81920d1b6b88abd14b913d477aad7608ea70d"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_log",
+      "verdict": "UNCHANGED",
+      "hash": "9f452f44f7a3b86f8279e418062ed9808fd4279450fe8147ea317c1757a8b122"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_summary",
+      "verdict": "UNCHANGED",
+      "hash": "4dd39a1a7fd818e6647822adf488127bee2f886c40dba72dc28012d161175d1f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_task",
+      "verdict": "UNCHANGED",
+      "hash": "07cbfbe6d8caf2fd02e092e4ecc6f8da7c6549ae0bd7ce7b1c0d700a111d66f3"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "initialize_managers",
+      "verdict": "UNCHANGED",
+      "hash": "952ecf6244cb3aaea735d592842c233432be7c9804531c16d1c5a8f7c109298a"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable",
+      "verdict": "UNCHANGED",
+      "hash": "90b263eb00daa3494ca073c819afcecf325d3eab03ef60f4fddefd85574b8cce"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.__init__",
+      "verdict": "UNCHANGED",
+      "hash": "6dc3a37aae51ebe6e7de0a297b919e88fecf3c25f1881ce6d623c7a215abe46c"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._calculate_column_widths",
+      "verdict": "UNCHANGED",
+      "hash": "c74e3f81436fe61d97014fc6e6f835aa5209cd29133e673db36ea5221a66be75"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._create_table",
+      "verdict": "UNCHANGED",
+      "hash": "f8ddaf7c76eb2475cf7c7e476de86af5c1adeff4cc0a64b9e9725aa30e7a0b10"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._render_table",
+      "verdict": "UNCHANGED",
+      "hash": "ec8bce5fad8c7d91e69a7e3922752fa5008d45dab794e5fbcbdb1f34964a65fe"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.log",
+      "verdict": "UNCHANGED",
+      "hash": "6bf28e41f4c90101cf9add9c9ca9b877ed91c586344d864a81a8cb323f28409c"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.render_log_panel",
+      "verdict": "UNCHANGED",
+      "hash": "48d8825bd2c551bdd01d0aeb0f75f1513c40d32fceefe85fa93d9f49d788b97f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager",
+      "verdict": "UNCHANGED",
+      "hash": "85d318d94474569f0e339818eeead2fef7415a96b43fbc5b7fc0ce230cdc2218"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.__init__",
+      "verdict": "UNCHANGED",
+      "hash": "bec1366afb2d28b27cc689e902aa099a1edf4cede0e26874a6cd0f216a4487e7"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._adjust_description",
+      "verdict": "UNCHANGED",
+      "hash": "5f7e519af59927147ad0f3676b37f1b860284b682e6cfc095e519185e15541cf"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._cleanup_completed_overall_tasks",
+      "verdict": "UNCHANGED",
+      "hash": "8cd58c13fa9d774aea968520204909a367408f31bc6a1c8ac9379225a27cb424"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._create_progress_bar",
+      "verdict": "UNCHANGED",
+      "hash": "4a995847111f343118c2fa9c6a5f1c8709cb927d7cffce9c5c2265c89050e6f1"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._update_overall_task",
+      "verdict": "UNCHANGED",
+      "hash": "0c6f8c300d51d8d0c8a1459ac735970758be879c9b16acc2d310fd770826803e"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.add_overall_task",
+      "verdict": "UNCHANGED",
+      "hash": "ecc8f697b3361f645b9f792cd2f154f4f90a1cc6516b2f3b2fa63939886c9831"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.add_task",
+      "verdict": "UNCHANGED",
+      "hash": "708e929520d61d38f0170caaada14c817ac573ec4ad6d21dff240ce393b3912f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.create_progress_table",
+      "verdict": "UNCHANGED",
+      "hash": "5f31c54602924fc17b680af030eed23f24f3c11bd420ea91f126f3e3aa1a5d72"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.get_panel_width",
+      "verdict": "UNCHANGED",
+      "hash": "5ae94b189035822b7647e04989527e56e1f708c0e17c19b8e3c77c5c7191cf8f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.update_task",
+      "verdict": "UNCHANGED",
+      "hash": "20c325d68878ec6ade701660c6824f1fb98a8842077c1c25acdd916ee5a018a7"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager",
+      "verdict": "UNCHANGED",
+      "hash": "91a05b4d4b9a19654e1c674bc28e001f0c2088b83676b353eb81caccb5063814"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.__init__",
+      "verdict": "UNCHANGED",
+      "hash": "2dc9b7230b14f8dc567f99b59024a284d8ea072c78aca9d9b1b55dfa07f8bc48"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager._get_task_result",
+      "verdict": "UNCHANGED",
+      "hash": "8a7b8a020635488519a66db983271ac182d94cfdf3608ae33490f4ce07162f17"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.get_result_count",
+      "verdict": "UNCHANGED",
+      "hash": "42be41c7ee750d4082fee64a2368f8b9684a65cf7c5c9aafd6e04f5ce5cb6bbc"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.update_result",
+      "verdict": "UNCHANGED",
+      "hash": "06fd9b16e8fe5dae111ca6923d1e25ec3b7e89ed66887de2f76cac0abe70b9de"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "add_https_prefix",
+      "verdict": "UNCHANGED",
+      "hash": "bf0b684af2e3cfafd33815c9fccc7e4148c1139b7f10c7c958bb2cb9bddf2a3a"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "check_url_type",
+      "verdict": "CHANGED",
+      "baseline_hash": "4be5c2172e4d0eb7a7f07478a28da277e262b7b6ec406c51ca73dc8de2f1ba45",
+      "candidate_hash": "e50adefe40e7fe90aac3f613b5cda9dc9e34b9542a6a62b319359b73e96a1cb5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_album_id",
+      "verdict": "UNCHANGED",
+      "hash": "4b5d7392cc10b8b7d86ce07141ee4cee0f16989ed33a928a62e08fcdc5769399"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_album_name",
+      "verdict": "UNCHANGED",
+      "hash": "6d75be60702866b0e41a7eb84d69302b123a8192c5f74a33fb08862e40087db1"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_host_page",
+      "verdict": "UNCHANGED",
+      "hash": "1c5407c9169d871df8eee88ec4060ce2e60ea073c29771f136d229cd9c6e19c5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_identifier",
+      "verdict": "UNCHANGED",
+      "hash": "ed34ecbd8b570118181b40e4e266037000fa39b24577ecbe063eb4f30c9481b4"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_item_type",
+      "verdict": "MISSING",
+      "hash": "39ec76b8b91dfefd3cf70ba385bb07be7143ec3a4fee935cc99e5a0a6af0135a"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_media_slug",
+      "verdict": "UNCHANGED",
+      "hash": "3b6a7a6cc0f8c8a46380ea777b6d382cc16db7c036ff4ed1fbc996a776ddc6b2"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_url_based_filename",
+      "verdict": "UNCHANGED",
+      "hash": "265b26bc79481cdbe20f3ea8d4b2f2076cd61f074fb0bd86e06e6da2bf103304"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "log_unavailable_url",
+      "verdict": "UNCHANGED",
+      "hash": "0a6b2d862ac0c94e9c142d34297dbfc81184e8c9a331d55288f406099d97acc5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "replace_domain_with_fallback",
+      "verdict": "UNCHANGED",
+      "hash": "7d284e1c64f92ea21a42062d8e11b1ae502c66375b53b9278d86a6676d1682f7"
+    },
+    {
+      "file": "src/version.py",
+      "unit": "VersionInfo",
+      "verdict": "UNCHANGED",
+      "hash": "b7955383e0462713383919379cb429a3e6d127dada9fe20837995dd35a45df8f"
+    },
+    {
+      "file": "src/version.py",
+      "unit": "get_version_string",
+      "verdict": "UNCHANGED",
+      "hash": "feac32fb61e5765ca57f20adb2beb5abdc478840caa613e4699f348533c7178a"
+    }
+  ],
+  "baseline_manifest": [
+    {
+      "file": "downloader.py",
+      "unit": "handle_download_process",
+      "hash": "b9ce58bd238ed1ad6cd8616d7e6575e4ee09f26a67247aa47860e4379b23daaf"
+    },
+    {
+      "file": "downloader.py",
+      "unit": "main",
+      "hash": "3581e3bc0614fe702c4dc6429dd0fcb33634f856de286bbc99ec136e03b2d6aa"
+    },
+    {
+      "file": "downloader.py",
+      "unit": "validate_and_download",
+      "hash": "3665bec499795e8bcc9a07d3e9bb150cf12b1b871dc20f86f56fbf5c4bfc4534"
+    },
+    {
+      "file": "main.py",
+      "unit": "main",
+      "hash": "514cf4ff04900c381f21c770517f528742d332aa4fd6ed2f4e04dc5168037a41"
+    },
+    {
+      "file": "main.py",
+      "unit": "process_urls",
+      "hash": "7613644fec021914d231505447a75dbe9f65a0959a4494584512c478c676cac6"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "fetch_page",
+      "hash": "74c47ae159108846b162006a923df899c10aa8b2ee37036cc327dc2b8418b3db"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_bunkr_status",
+      "hash": "9443369900bcd18eae91dcefa3c57c1c6aab60547720ce010018447d0254c9bb"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_offline_servers",
+      "hash": "14dfb08dfd1c3568207572a3e4c358a9f1388953b093155845dd1a5fdd09d58c"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_subdomain",
+      "hash": "a4201b8cc62cf6e1cf303fc579ceb2c79e9c047ce7e61e2b827c42024ccd993b"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "mark_subdomain_as_offline",
+      "hash": "1666fc4d06e129b8b81b094cf9b1c1bed1bb0bb67c136abe233fa13b690cad5e"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "subdomain_is_offline",
+      "hash": "746992aa2805d346758bd6f1a222b5692ef46f733593ec23d786422b907079d2"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "AlbumInfo",
+      "hash": "218df14fec7828f486e48259e1a066f32c8371062ff4c8f4bc490e03e9d3c574"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "CompletedReason",
+      "hash": "0e409a3e5b2389932dee2fa92b44a6c9c6fa25d5ea59503e61c6fcd741f53df8"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "DownloadInfo",
+      "hash": "3cc2bff22025b810762328d45d944b458b0e184ad4285973ccbe69135923d551"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "FailedReason",
+      "hash": "b5508eeee9fb7d2040c1d64fb85b4c1f99e96d38701d0001b13c4a2402dacd57"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "HTTPStatus",
+      "hash": "87b2dc5f4070e4f56c3a1ecd58277b9a6aeadc9d05ddfa046d7ece9654ddf85f"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "ProgressConfig",
+      "hash": "7e165856bb44c66ecee8170823904e4ccf8332dcd58a31902a20a1e1b07df903"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "SessionInfo",
+      "hash": "84f2d7df2e953ea99458dcd6c7a9409a16416d5fd6a776368eb8e1cfdb737b40"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "SkippedReason",
+      "hash": "a0c1bd3e6f605ada193f42717962c4837b25b375bc27c3e7f7bd661ffbb31cf9"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "TaskReason",
+      "hash": "cc08c468397ceaf50c1dcc87a22f04ca63f52469f88b2c513d61065a4f63c32b"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "TaskResult",
+      "hash": "556de48824d091b48f539a04a774387dee3e096487e640656abaef1d7e1a6c7f"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "add_common_arguments",
+      "hash": "77e58e718f98b026467cd8d9212057798bcabdbadfb09742f91d407598bacc0c"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "parse_arguments",
+      "hash": "1f2875152fef66777976ad31afa802cdc37703574f7971448306222799bb3e42"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "setup_parser",
+      "hash": "35f38a0a6001e1d74ab08720a235c8a346a43d5b6d9ac3f4230e32fe9bbdb2c3"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "extract_file_id",
+      "hash": "b3557850316605d71deb8e3f2d3755c11139cda6ec5e82b6d94c44d7d25b3a38"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "extract_page_vars",
+      "hash": "b3cfb15ba009e3ec2149e4e27333e0b5a110c47d21fb20c5fdfc93cde8babf93"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "get_api_response",
+      "hash": "16d7ebf406cd51919c93d2ed6098f67410cbbaa42992b7950ec634a79086e097"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "get_download_response",
+      "hash": "2aa431e6f7d455a4e6341616c275568815e37bdcecd8c6d9ff66e0b47179a018"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "unescape_js_path",
+      "hash": "e75e950e3730199a3c9c528cef73c35e57292d195d24e5ec14ce24ade56e6d75"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "decrypt_cf_email",
+      "hash": "4d945411e4da7229b6f750c72dafa014883c134013254f532d1382b2d811405a"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_all_album_item_pages",
+      "hash": "fb5e4602c9fd54254e436fe31ba7948e6dbe960c6f70d5627e7423e0ccda36d0"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_item_pages",
+      "hash": "6477bd418cb0be86afca037c5fd58751c716c194de4fd9f1cdc2f9b2b35a5c35"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_next_album_pages",
+      "hash": "b07a1f7868d94e160fc24ef342a8898fe1fb1cbf9f8f85165ae2d695526883b0"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "format_item_filename",
+      "hash": "25c8e78a5925ec1d9f248d2ff2d28a0f8343a25e006ba8da46de1ae6e6f8f0cd"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_download_info",
+      "hash": "87e2f3ec4ede934c7ef7688938cc5c10ac09d14f22c037a5d3ac9893c7039f44"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_item_download_link",
+      "hash": "2e91bc0e1583baa1367b314963335122fc881526effbdbfa7b1ee4e798478e1f"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_item_filename",
+      "hash": "2c9757bb23e0d3290dc237c2112e7397c52786894232335fda9b9e738b4a1c6d"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader",
+      "hash": "89da8e988a0302390c8166b427fad3ec625ea27bda47299a2a14dbfd58defed1"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.__init__",
+      "hash": "6a5298ab1d61dd855e46c33720d5aa2c373061b4fff37db35ea25055aad015e9"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._fetch_page_with_retries",
+      "hash": "195ce94fb782d94e8f74aa108b8cde9983b5718ba075fc770177af5575a41a9d"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._process_failed_downloads",
+      "hash": "b22ee028b8dfef690c8db36d39da68a01694d65be640c33187a3688d3ef039a2"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._retry_failed_download",
+      "hash": "8677040eabce36369f7a018c5987ec5811b57af8e8131a6ff80d7f2f98a83e63"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.download_album",
+      "hash": "98c550e07074b003dc54a81e34b7aa6ff8cdb55d56fee6b1286daa7adedd5c6f"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.execute_item_download",
+      "hash": "a16901284686a492d21eb74cb5fd28ec914527d0f7d9e2770956632213426f6c"
+    },
+    {
+      "file": "src/downloaders/download_utils.py",
+      "unit": "get_chunk_size",
+      "hash": "de7b631d1f3ac5a6f232e52c8f88298bfffebc3341170595cf45f209fa29b37b"
+    },
+    {
+      "file": "src/downloaders/download_utils.py",
+      "unit": "save_file_with_progress",
+      "hash": "d290db855bc1df6a1bd067f4fbafcc5307e0b4e719e05a197b1c04e51766ded4"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader",
+      "hash": "7448fbbe4f311dc076caf8c79df80a615a78961aa918b164aaad8a6feb866165"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.__init__",
+      "hash": "f4810bd0ab4f9005e0d3cfdd320bc2f295be20955ed1aaa53b8c1fdefa57b0d2"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._finalize_download",
+      "hash": "1b0fbed47234ec68b271ce6504e30591b05217557659d03f73bf806ace0b904c"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._handle_failed_download",
+      "hash": "7768b2414a0146c647c4bd64e435ef4f3d4fd099c4b6e3c9fd7e015beabe51b5"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._handle_request_exception",
+      "hash": "4b5a75f0eb0c72f9564dd827a3e59563288c09ad5d9b85e51bc1b1416c66074d"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._retry_with_backoff",
+      "hash": "8b4544e74e4582284ffa7e2a91c5f5f2e352f85a45b75d0c6f22aa6f9a1c937a"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._skip_file_download",
+      "hash": "938838ce2b76212e2d3c53865ee04eeed4595ab78f5cb8d3a9ed9293e054eb75"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._skip_file_download.log_and_skip_event",
+      "hash": "6b1ce76c39f4720a80ef662c00e3dbc065e582ae10e4bd587e62979fc2cab8ef"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.attempt_download",
+      "hash": "bc9bd04f00c97fcc26cfe5ec972358475b5ab3e4734861f1ecb32589cc702b6e"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.download",
+      "hash": "7d4df7050020088a4a2c926f614f0b67bb1cd15188a46c0901efbad3b48d6c54"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "create_download_directory",
+      "hash": "618801cce1e474c137d49b7ed6f90348c122e2d9b27e40105f262c67316c5d75"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "create_urls_file_backup",
+      "hash": "9467c984b3dfb609aedeea639abce78de2b164fe3ca4e8a3706cadd1d14e9432"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "format_directory_name",
+      "hash": "72fef8db6de13d1938cba62dcd1ce4db6ccac722363502e7db38d9486d40811d"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "read_file",
+      "hash": "b187895b9b91828c10e11db141fd62c30d5955f01d00e2d83330cf1ecbf89472"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "remove_invalid_characters",
+      "hash": "183c7e0172267523fd4bfad13c829a83b310516199e1b509c5953ccf50da534f"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "sanitize_directory_name",
+      "hash": "7d262ee91b22b8b262cf765bb71633dec80e24f3a287604fc3f82b4bcdf3bc6f"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "truncate_filename",
+      "hash": "f4aae748add2dcf029a6b45a3b1f3eb0573c9f5d04ab7cb93e7ec10a56dfcbec"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "write_file",
+      "hash": "51fbcdf94f12b54bb5b9a24f730b6278368259f7ee62d82cf9b54302f04231af"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "write_on_session_log",
+      "hash": "f17aef342ff03ff814a4aded79407d38c1b4047e7e921ee7ba915b2ca9d23d32"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "check_disk_space",
+      "hash": "df4672d0356051812c4745f1617be03a9c6f929564f1194bbe6e011383a2b65a"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "check_python_version",
+      "hash": "c82b3c4c712076d073ad9a957614ec391884492027dbad7aea558bff1a686641"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "clear_terminal",
+      "hash": "af055d12eb68dfc321d6e3caaeef78e18b5f496f9273b3d92442e10eeeaa669e"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "fetch_page",
+      "hash": "d35b0d3314901cfbbf540abe04eb3cedbf25c04c793efb66241d818b5866a516"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "fetch_page.handle_response",
+      "hash": "bfab7b3d36cfd754194b015534da5399909e4f824cb3de508ae4487c2907cd41"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "get_root_path",
+      "hash": "9081a6a54709ce5d7a1892337969a061d068f53a470de863ad99fc7fb8f6fb7b"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "validate_download_link",
+      "hash": "c42b42aeeb728fd3bfd43044462fa3201446a91290e84d5482d26faedcfb783f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager",
+      "hash": "94add22a50db998fe88e0baada704084a78f063f3877c88611e46295c8898828"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.__init__",
+      "hash": "a32abf10f6cbcb2cf5924ac2b03f37bc04f6ed385cdca8c333d569b69297153f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._compute_execution_time",
+      "hash": "c89552ccc3e803e761abaa31f5d3a4e234c824cdc3ed629bf48a5f4c3f343706"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._log_results_summary",
+      "hash": "7bf6e41f2562d4c8c4ea21feee4b2f7870e20381feefd63eeb5b2810810e34ff"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._log_results_summary.log_reason",
+      "hash": "4beeefae2033ee977476157a5cca9c7e8d055278bbf980e7797e093e1f3f641e"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._render_live_view",
+      "hash": "18dccb44bd3e89d9ee1064d46f427773c6b2fadae9a611ff134413c7e80889f2"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.add_overall_task",
+      "hash": "3652a596a916129af8b5d57204146e889dfb4fb6f65c5bad53afa94d7b7cd11b"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.add_task",
+      "hash": "8ed93b2b0e7b04edc1abeed5f44c72707b76b846962984a1ef5d78d1587f9bed"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.start",
+      "hash": "b4ee21ace8e3b3b76cb6bd1986751cf7036acd0b54cd640c095b801dd287c3e5"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.stop",
+      "hash": "cdb8a7766a1a5f74d76383b841d81920d1b6b88abd14b913d477aad7608ea70d"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_log",
+      "hash": "9f452f44f7a3b86f8279e418062ed9808fd4279450fe8147ea317c1757a8b122"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_summary",
+      "hash": "4dd39a1a7fd818e6647822adf488127bee2f886c40dba72dc28012d161175d1f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_task",
+      "hash": "07cbfbe6d8caf2fd02e092e4ecc6f8da7c6549ae0bd7ce7b1c0d700a111d66f3"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "initialize_managers",
+      "hash": "952ecf6244cb3aaea735d592842c233432be7c9804531c16d1c5a8f7c109298a"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable",
+      "hash": "90b263eb00daa3494ca073c819afcecf325d3eab03ef60f4fddefd85574b8cce"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.__init__",
+      "hash": "6dc3a37aae51ebe6e7de0a297b919e88fecf3c25f1881ce6d623c7a215abe46c"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._calculate_column_widths",
+      "hash": "c74e3f81436fe61d97014fc6e6f835aa5209cd29133e673db36ea5221a66be75"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._create_table",
+      "hash": "f8ddaf7c76eb2475cf7c7e476de86af5c1adeff4cc0a64b9e9725aa30e7a0b10"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._render_table",
+      "hash": "ec8bce5fad8c7d91e69a7e3922752fa5008d45dab794e5fbcbdb1f34964a65fe"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.log",
+      "hash": "6bf28e41f4c90101cf9add9c9ca9b877ed91c586344d864a81a8cb323f28409c"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.render_log_panel",
+      "hash": "48d8825bd2c551bdd01d0aeb0f75f1513c40d32fceefe85fa93d9f49d788b97f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager",
+      "hash": "85d318d94474569f0e339818eeead2fef7415a96b43fbc5b7fc0ce230cdc2218"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.__init__",
+      "hash": "bec1366afb2d28b27cc689e902aa099a1edf4cede0e26874a6cd0f216a4487e7"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._adjust_description",
+      "hash": "5f7e519af59927147ad0f3676b37f1b860284b682e6cfc095e519185e15541cf"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._cleanup_completed_overall_tasks",
+      "hash": "8cd58c13fa9d774aea968520204909a367408f31bc6a1c8ac9379225a27cb424"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._create_progress_bar",
+      "hash": "4a995847111f343118c2fa9c6a5f1c8709cb927d7cffce9c5c2265c89050e6f1"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._update_overall_task",
+      "hash": "0c6f8c300d51d8d0c8a1459ac735970758be879c9b16acc2d310fd770826803e"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.add_overall_task",
+      "hash": "ecc8f697b3361f645b9f792cd2f154f4f90a1cc6516b2f3b2fa63939886c9831"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.add_task",
+      "hash": "708e929520d61d38f0170caaada14c817ac573ec4ad6d21dff240ce393b3912f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.create_progress_table",
+      "hash": "5f31c54602924fc17b680af030eed23f24f3c11bd420ea91f126f3e3aa1a5d72"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.get_panel_width",
+      "hash": "5ae94b189035822b7647e04989527e56e1f708c0e17c19b8e3c77c5c7191cf8f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.update_task",
+      "hash": "20c325d68878ec6ade701660c6824f1fb98a8842077c1c25acdd916ee5a018a7"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager",
+      "hash": "91a05b4d4b9a19654e1c674bc28e001f0c2088b83676b353eb81caccb5063814"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.__init__",
+      "hash": "2dc9b7230b14f8dc567f99b59024a284d8ea072c78aca9d9b1b55dfa07f8bc48"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager._get_task_result",
+      "hash": "8a7b8a020635488519a66db983271ac182d94cfdf3608ae33490f4ce07162f17"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.get_result_count",
+      "hash": "42be41c7ee750d4082fee64a2368f8b9684a65cf7c5c9aafd6e04f5ce5cb6bbc"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.update_result",
+      "hash": "06fd9b16e8fe5dae111ca6923d1e25ec3b7e89ed66887de2f76cac0abe70b9de"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "add_https_prefix",
+      "hash": "bf0b684af2e3cfafd33815c9fccc7e4148c1139b7f10c7c958bb2cb9bddf2a3a"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "check_url_type",
+      "hash": "4be5c2172e4d0eb7a7f07478a28da277e262b7b6ec406c51ca73dc8de2f1ba45"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_album_id",
+      "hash": "4b5d7392cc10b8b7d86ce07141ee4cee0f16989ed33a928a62e08fcdc5769399"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_album_name",
+      "hash": "6d75be60702866b0e41a7eb84d69302b123a8192c5f74a33fb08862e40087db1"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_host_page",
+      "hash": "1c5407c9169d871df8eee88ec4060ce2e60ea073c29771f136d229cd9c6e19c5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_identifier",
+      "hash": "ed34ecbd8b570118181b40e4e266037000fa39b24577ecbe063eb4f30c9481b4"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_item_type",
+      "hash": "39ec76b8b91dfefd3cf70ba385bb07be7143ec3a4fee935cc99e5a0a6af0135a"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_media_slug",
+      "hash": "3b6a7a6cc0f8c8a46380ea777b6d382cc16db7c036ff4ed1fbc996a776ddc6b2"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_url_based_filename",
+      "hash": "265b26bc79481cdbe20f3ea8d4b2f2076cd61f074fb0bd86e06e6da2bf103304"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "log_unavailable_url",
+      "hash": "0a6b2d862ac0c94e9c142d34297dbfc81184e8c9a331d55288f406099d97acc5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "replace_domain_with_fallback",
+      "hash": "7d284e1c64f92ea21a42062d8e11b1ae502c66375b53b9278d86a6676d1682f7"
+    },
+    {
+      "file": "src/version.py",
+      "unit": "VersionInfo",
+      "hash": "b7955383e0462713383919379cb429a3e6d127dada9fe20837995dd35a45df8f"
+    },
+    {
+      "file": "src/version.py",
+      "unit": "get_version_string",
+      "hash": "feac32fb61e5765ca57f20adb2beb5abdc478840caa613e4699f348533c7178a"
+    }
+  ],
+  "candidate_manifest": [
+    {
+      "file": "downloader.py",
+      "unit": "handle_download_process",
+      "hash": "c36938560f26ebabb9a8c02a7de6030f64c1900f53eed9d925e5cb175b329f1c"
+    },
+    {
+      "file": "downloader.py",
+      "unit": "main",
+      "hash": "aec040d96dc7fe1242a4b695d7252d04fcc80c6a37b62f9a2e3c234f0c5c62b2"
+    },
+    {
+      "file": "downloader.py",
+      "unit": "validate_and_download",
+      "hash": "3665bec499795e8bcc9a07d3e9bb150cf12b1b871dc20f86f56fbf5c4bfc4534"
+    },
+    {
+      "file": "main.py",
+      "unit": "main",
+      "hash": "514cf4ff04900c381f21c770517f528742d332aa4fd6ed2f4e04dc5168037a41"
+    },
+    {
+      "file": "main.py",
+      "unit": "process_urls",
+      "hash": "1e177e49bf985b4d8ba689bb2818f92a5fe783cfd674683a349eb4d57122b1a3"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "fetch_page",
+      "hash": "74c47ae159108846b162006a923df899c10aa8b2ee37036cc327dc2b8418b3db"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_bunkr_status",
+      "hash": "9443369900bcd18eae91dcefa3c57c1c6aab60547720ce010018447d0254c9bb"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_offline_servers",
+      "hash": "14dfb08dfd1c3568207572a3e4c358a9f1388953b093155845dd1a5fdd09d58c"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "get_subdomain",
+      "hash": "a4201b8cc62cf6e1cf303fc579ceb2c79e9c047ce7e61e2b827c42024ccd993b"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "mark_subdomain_as_offline",
+      "hash": "1666fc4d06e129b8b81b094cf9b1c1bed1bb0bb67c136abe233fa13b690cad5e"
+    },
+    {
+      "file": "src/bunkr_utils.py",
+      "unit": "subdomain_is_offline",
+      "hash": "746992aa2805d346758bd6f1a222b5692ef46f733593ec23d786422b907079d2"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "AlbumInfo",
+      "hash": "218df14fec7828f486e48259e1a066f32c8371062ff4c8f4bc490e03e9d3c574"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "CompletedReason",
+      "hash": "0e409a3e5b2389932dee2fa92b44a6c9c6fa25d5ea59503e61c6fcd741f53df8"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "DownloadInfo",
+      "hash": "3cc2bff22025b810762328d45d944b458b0e184ad4285973ccbe69135923d551"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "FailedReason",
+      "hash": "b5508eeee9fb7d2040c1d64fb85b4c1f99e96d38701d0001b13c4a2402dacd57"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "HTTPStatus",
+      "hash": "87b2dc5f4070e4f56c3a1ecd58277b9a6aeadc9d05ddfa046d7ece9654ddf85f"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "ProgressConfig",
+      "hash": "7e165856bb44c66ecee8170823904e4ccf8332dcd58a31902a20a1e1b07df903"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "SessionInfo",
+      "hash": "84f2d7df2e953ea99458dcd6c7a9409a16416d5fd6a776368eb8e1cfdb737b40"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "SkippedReason",
+      "hash": "a0c1bd3e6f605ada193f42717962c4837b25b375bc27c3e7f7bd661ffbb31cf9"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "TaskReason",
+      "hash": "cc08c468397ceaf50c1dcc87a22f04ca63f52469f88b2c513d61065a4f63c32b"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "TaskResult",
+      "hash": "556de48824d091b48f539a04a774387dee3e096487e640656abaef1d7e1a6c7f"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "add_common_arguments",
+      "hash": "77e58e718f98b026467cd8d9212057798bcabdbadfb09742f91d407598bacc0c"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "parse_arguments",
+      "hash": "1f2875152fef66777976ad31afa802cdc37703574f7971448306222799bb3e42"
+    },
+    {
+      "file": "src/config.py",
+      "unit": "setup_parser",
+      "hash": "35f38a0a6001e1d74ab08720a235c8a346a43d5b6d9ac3f4230e32fe9bbdb2c3"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "extract_file_id",
+      "hash": "f9eb075dd53cd228fff7dc356bc40ef903d21f643d30ca02eb09451b469cf8d2"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "extract_page_vars",
+      "hash": "b3cfb15ba009e3ec2149e4e27333e0b5a110c47d21fb20c5fdfc93cde8babf93"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "get_api_response",
+      "hash": "bce89d170a665d9add357d26dd6c2530f744a160e413eaca5bafde270fcef7df"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "get_download_response",
+      "hash": "2aa431e6f7d455a4e6341616c275568815e37bdcecd8c6d9ff66e0b47179a018"
+    },
+    {
+      "file": "src/crawlers/api_utils.py",
+      "unit": "unescape_js_path",
+      "hash": "e75e950e3730199a3c9c528cef73c35e57292d195d24e5ec14ce24ade56e6d75"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "decrypt_cf_email",
+      "hash": "4d945411e4da7229b6f750c72dafa014883c134013254f532d1382b2d811405a"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_all_album_item_pages",
+      "hash": "fb5e4602c9fd54254e436fe31ba7948e6dbe960c6f70d5627e7423e0ccda36d0"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_item_pages",
+      "hash": "6477bd418cb0be86afca037c5fd58751c716c194de4fd9f1cdc2f9b2b35a5c35"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "extract_next_album_pages",
+      "hash": "b07a1f7868d94e160fc24ef342a8898fe1fb1cbf9f8f85165ae2d695526883b0"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "format_item_filename",
+      "hash": "25c8e78a5925ec1d9f248d2ff2d28a0f8343a25e006ba8da46de1ae6e6f8f0cd"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_download_info",
+      "hash": "6bb4879ec2bcc849f1963a95c9157591834edfea0e59e39e95840426f52a0e83"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_item_download_link",
+      "hash": "7651d9143231760b09dde64b12f02547b11475ba29d4568e0ec5cfa1167aa405"
+    },
+    {
+      "file": "src/crawlers/crawler_utils.py",
+      "unit": "get_item_filename",
+      "hash": "6ef738db1be8a74929e0a7c8b99b33d5955ed0c2bba18666e8ea31357fd854f4"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader",
+      "hash": "eb9a7e7ad556fc827bebb5fa1a923b00ae6245a8d3aba7b1c979b6ae4a1cd7ec"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.__init__",
+      "hash": "6a5298ab1d61dd855e46c33720d5aa2c373061b4fff37db35ea25055aad015e9"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._fetch_page_with_retries",
+      "hash": "883a813a249de66c1e170b0b7a6474ec65102e6fef8fe3026e03d684744318aa"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._process_failed_downloads",
+      "hash": "b22ee028b8dfef690c8db36d39da68a01694d65be640c33187a3688d3ef039a2"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader._retry_failed_download",
+      "hash": "8677040eabce36369f7a018c5987ec5811b57af8e8131a6ff80d7f2f98a83e63"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.download_album",
+      "hash": "3d458a5ffaa1d2814eb90988875c363300e4209190fbb1b94478acd62873aaf4"
+    },
+    {
+      "file": "src/downloaders/album_downloader.py",
+      "unit": "AlbumDownloader.execute_item_download",
+      "hash": "80e54330a35d60dfa6f9e180f7ffe12963fb48ee4b13f171907a0500b5031ad6"
+    },
+    {
+      "file": "src/downloaders/download_utils.py",
+      "unit": "get_chunk_size",
+      "hash": "de7b631d1f3ac5a6f232e52c8f88298bfffebc3341170595cf45f209fa29b37b"
+    },
+    {
+      "file": "src/downloaders/download_utils.py",
+      "unit": "save_file_with_progress",
+      "hash": "515d36dbdf58f4a9c860642456d23f95c16c3036f92d5f75e885b30f49edfae4"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader",
+      "hash": "1f6a1826c48b41d532af2c015dc38c8bcc9536aceb28e667934176600decb704"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.__init__",
+      "hash": "f4810bd0ab4f9005e0d3cfdd320bc2f295be20955ed1aaa53b8c1fdefa57b0d2"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._finalize_download",
+      "hash": "1b0fbed47234ec68b271ce6504e30591b05217557659d03f73bf806ace0b904c"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._handle_failed_download",
+      "hash": "7768b2414a0146c647c4bd64e435ef4f3d4fd099c4b6e3c9fd7e015beabe51b5"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._handle_request_exception",
+      "hash": "1a4a50c5c8529637127edc79482ff47321d47622d92b44e073d0a1c5042b1a19"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._retry_with_backoff",
+      "hash": "8b4544e74e4582284ffa7e2a91c5f5f2e352f85a45b75d0c6f22aa6f9a1c937a"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._skip_file_download",
+      "hash": "938838ce2b76212e2d3c53865ee04eeed4595ab78f5cb8d3a9ed9293e054eb75"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader._skip_file_download.log_and_skip_event",
+      "hash": "6b1ce76c39f4720a80ef662c00e3dbc065e582ae10e4bd587e62979fc2cab8ef"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.attempt_download",
+      "hash": "bc9bd04f00c97fcc26cfe5ec972358475b5ab3e4734861f1ecb32589cc702b6e"
+    },
+    {
+      "file": "src/downloaders/media_downloader.py",
+      "unit": "MediaDownloader.download",
+      "hash": "574069503f748aa81e721748827f522d6af5c9fdb36addac356d684acdad86c8"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "create_download_directory",
+      "hash": "618801cce1e474c137d49b7ed6f90348c122e2d9b27e40105f262c67316c5d75"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "create_urls_file_backup",
+      "hash": "9467c984b3dfb609aedeea639abce78de2b164fe3ca4e8a3706cadd1d14e9432"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "format_directory_name",
+      "hash": "4de066987be17782fd5637bb82d1e6f811f3781da006d777e2422e3b29bfed49"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "read_file",
+      "hash": "b187895b9b91828c10e11db141fd62c30d5955f01d00e2d83330cf1ecbf89472"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "remove_invalid_characters",
+      "hash": "183c7e0172267523fd4bfad13c829a83b310516199e1b509c5953ccf50da534f"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "sanitize_directory_name",
+      "hash": "7d262ee91b22b8b262cf765bb71633dec80e24f3a287604fc3f82b4bcdf3bc6f"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "truncate_filename",
+      "hash": "f4aae748add2dcf029a6b45a3b1f3eb0573c9f5d04ab7cb93e7ec10a56dfcbec"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "write_file",
+      "hash": "51fbcdf94f12b54bb5b9a24f730b6278368259f7ee62d82cf9b54302f04231af"
+    },
+    {
+      "file": "src/file_utils.py",
+      "unit": "write_on_session_log",
+      "hash": "f17aef342ff03ff814a4aded79407d38c1b4047e7e921ee7ba915b2ca9d23d32"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "check_disk_space",
+      "hash": "df4672d0356051812c4745f1617be03a9c6f929564f1194bbe6e011383a2b65a"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "check_python_version",
+      "hash": "c82b3c4c712076d073ad9a957614ec391884492027dbad7aea558bff1a686641"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "clear_terminal",
+      "hash": "af055d12eb68dfc321d6e3caaeef78e18b5f496f9273b3d92442e10eeeaa669e"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "fetch_page",
+      "hash": "0b235bf43238d2fb87b5a36920d14a44833a5c189b92b139e7fcb2cbbd432d04"
+    },
+    {
+      "file": "src/general_utils.py",
+      "unit": "get_root_path",
+      "hash": "8a8a187794da8cfa23dfb868be8575ce22fa1f759a219c1481a0fcce0e50dcfa"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager",
+      "hash": "94add22a50db998fe88e0baada704084a78f063f3877c88611e46295c8898828"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.__init__",
+      "hash": "a32abf10f6cbcb2cf5924ac2b03f37bc04f6ed385cdca8c333d569b69297153f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._compute_execution_time",
+      "hash": "c89552ccc3e803e761abaa31f5d3a4e234c824cdc3ed629bf48a5f4c3f343706"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._log_results_summary",
+      "hash": "7bf6e41f2562d4c8c4ea21feee4b2f7870e20381feefd63eeb5b2810810e34ff"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._log_results_summary.log_reason",
+      "hash": "4beeefae2033ee977476157a5cca9c7e8d055278bbf980e7797e093e1f3f641e"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager._render_live_view",
+      "hash": "18dccb44bd3e89d9ee1064d46f427773c6b2fadae9a611ff134413c7e80889f2"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.add_overall_task",
+      "hash": "3652a596a916129af8b5d57204146e889dfb4fb6f65c5bad53afa94d7b7cd11b"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.add_task",
+      "hash": "8ed93b2b0e7b04edc1abeed5f44c72707b76b846962984a1ef5d78d1587f9bed"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.start",
+      "hash": "b4ee21ace8e3b3b76cb6bd1986751cf7036acd0b54cd640c095b801dd287c3e5"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.stop",
+      "hash": "cdb8a7766a1a5f74d76383b841d81920d1b6b88abd14b913d477aad7608ea70d"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_log",
+      "hash": "9f452f44f7a3b86f8279e418062ed9808fd4279450fe8147ea317c1757a8b122"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_summary",
+      "hash": "4dd39a1a7fd818e6647822adf488127bee2f886c40dba72dc28012d161175d1f"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "LiveManager.update_task",
+      "hash": "07cbfbe6d8caf2fd02e092e4ecc6f8da7c6549ae0bd7ce7b1c0d700a111d66f3"
+    },
+    {
+      "file": "src/managers/live_manager.py",
+      "unit": "initialize_managers",
+      "hash": "952ecf6244cb3aaea735d592842c233432be7c9804531c16d1c5a8f7c109298a"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable",
+      "hash": "90b263eb00daa3494ca073c819afcecf325d3eab03ef60f4fddefd85574b8cce"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.__init__",
+      "hash": "6dc3a37aae51ebe6e7de0a297b919e88fecf3c25f1881ce6d623c7a215abe46c"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._calculate_column_widths",
+      "hash": "c74e3f81436fe61d97014fc6e6f835aa5209cd29133e673db36ea5221a66be75"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._create_table",
+      "hash": "f8ddaf7c76eb2475cf7c7e476de86af5c1adeff4cc0a64b9e9725aa30e7a0b10"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable._render_table",
+      "hash": "ec8bce5fad8c7d91e69a7e3922752fa5008d45dab794e5fbcbdb1f34964a65fe"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.log",
+      "hash": "6bf28e41f4c90101cf9add9c9ca9b877ed91c586344d864a81a8cb323f28409c"
+    },
+    {
+      "file": "src/managers/log_manager.py",
+      "unit": "LoggerTable.render_log_panel",
+      "hash": "48d8825bd2c551bdd01d0aeb0f75f1513c40d32fceefe85fa93d9f49d788b97f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager",
+      "hash": "85d318d94474569f0e339818eeead2fef7415a96b43fbc5b7fc0ce230cdc2218"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.__init__",
+      "hash": "bec1366afb2d28b27cc689e902aa099a1edf4cede0e26874a6cd0f216a4487e7"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._adjust_description",
+      "hash": "5f7e519af59927147ad0f3676b37f1b860284b682e6cfc095e519185e15541cf"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._cleanup_completed_overall_tasks",
+      "hash": "8cd58c13fa9d774aea968520204909a367408f31bc6a1c8ac9379225a27cb424"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._create_progress_bar",
+      "hash": "4a995847111f343118c2fa9c6a5f1c8709cb927d7cffce9c5c2265c89050e6f1"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager._update_overall_task",
+      "hash": "0c6f8c300d51d8d0c8a1459ac735970758be879c9b16acc2d310fd770826803e"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.add_overall_task",
+      "hash": "ecc8f697b3361f645b9f792cd2f154f4f90a1cc6516b2f3b2fa63939886c9831"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.add_task",
+      "hash": "708e929520d61d38f0170caaada14c817ac573ec4ad6d21dff240ce393b3912f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.create_progress_table",
+      "hash": "5f31c54602924fc17b680af030eed23f24f3c11bd420ea91f126f3e3aa1a5d72"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.get_panel_width",
+      "hash": "5ae94b189035822b7647e04989527e56e1f708c0e17c19b8e3c77c5c7191cf8f"
+    },
+    {
+      "file": "src/managers/progress_manager.py",
+      "unit": "ProgressManager.update_task",
+      "hash": "20c325d68878ec6ade701660c6824f1fb98a8842077c1c25acdd916ee5a018a7"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager",
+      "hash": "91a05b4d4b9a19654e1c674bc28e001f0c2088b83676b353eb81caccb5063814"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.__init__",
+      "hash": "2dc9b7230b14f8dc567f99b59024a284d8ea072c78aca9d9b1b55dfa07f8bc48"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager._get_task_result",
+      "hash": "8a7b8a020635488519a66db983271ac182d94cfdf3608ae33490f4ce07162f17"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.get_result_count",
+      "hash": "42be41c7ee750d4082fee64a2368f8b9684a65cf7c5c9aafd6e04f5ce5cb6bbc"
+    },
+    {
+      "file": "src/managers/summary_manager.py",
+      "unit": "SummaryManager.update_result",
+      "hash": "06fd9b16e8fe5dae111ca6923d1e25ec3b7e89ed66887de2f76cac0abe70b9de"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "add_https_prefix",
+      "hash": "bf0b684af2e3cfafd33815c9fccc7e4148c1139b7f10c7c958bb2cb9bddf2a3a"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "check_url_type",
+      "hash": "e50adefe40e7fe90aac3f613b5cda9dc9e34b9542a6a62b319359b73e96a1cb5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_album_id",
+      "hash": "4b5d7392cc10b8b7d86ce07141ee4cee0f16989ed33a928a62e08fcdc5769399"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_album_name",
+      "hash": "6d75be60702866b0e41a7eb84d69302b123a8192c5f74a33fb08862e40087db1"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_host_page",
+      "hash": "1c5407c9169d871df8eee88ec4060ce2e60ea073c29771f136d229cd9c6e19c5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_identifier",
+      "hash": "ed34ecbd8b570118181b40e4e266037000fa39b24577ecbe063eb4f30c9481b4"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_media_slug",
+      "hash": "3b6a7a6cc0f8c8a46380ea777b6d382cc16db7c036ff4ed1fbc996a776ddc6b2"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "get_url_based_filename",
+      "hash": "265b26bc79481cdbe20f3ea8d4b2f2076cd61f074fb0bd86e06e6da2bf103304"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "log_unavailable_url",
+      "hash": "0a6b2d862ac0c94e9c142d34297dbfc81184e8c9a331d55288f406099d97acc5"
+    },
+    {
+      "file": "src/url_utils.py",
+      "unit": "replace_domain_with_fallback",
+      "hash": "7d284e1c64f92ea21a42062d8e11b1ae502c66375b53b9278d86a6676d1682f7"
+    },
+    {
+      "file": "src/version.py",
+      "unit": "VersionInfo",
+      "hash": "b7955383e0462713383919379cb429a3e6d127dada9fe20837995dd35a45df8f"
+    },
+    {
+      "file": "src/version.py",
+      "unit": "get_version_string",
+      "hash": "feac32fb61e5765ca57f20adb2beb5abdc478840caa613e4699f348533c7178a"
+    }
+  ]
+}

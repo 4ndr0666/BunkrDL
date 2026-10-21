@@ -1,0 +1,129 @@
+{
+  "protocol": "GUP v7.0.1 Gate 1 semantic superset review + authorized removals",
+  "round": "WO-001 bug-fix round (BunkrDL v1.2.2 -> v1.2.3)",
+  "authorization": "Work order WO-001: 'systematically and meticulously resolve all identified errors and bugs' and 'leave the app in a robust, deployable state inclusive of all logic with zero dead code, stubs, orphaned references, broken, missing or omitted code.'",
+  "review_records": {
+    "main.py::process_urls": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Baseline guarantee (process every URL in order, stop display at end) preserved; adds per-URL exception containment so one failing URL no longer aborts the batch. Errors are logged with full traceback (logging.exception), appended to session.log with outcome=BatchError, and surfaced in the live display. KeyboardInterrupt/SystemExit remain uncaught so Ctrl+C still stops the batch. This matches the README-documented intent 'Logs URLs that encounter errors for troubleshooting.' Also moves the one-shot get_bunkr_status() call onto a worker thread (async purity).",
+      "tests": "TestBatchContainment.test_remaining_urls_still_processed"
+    },
+    "downloader.py::handle_download_process": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Album path unchanged. Single-item path: preserves add_overall_task/add_task/MediaDownloader wiring; adds (1) graceful skip (log + session log + summary SERVICE_UNAVAILABLE) when get_download_info resolves no link - baseline crashed downstream on the None link (urlparse(None) TypeError); (2) asyncio.to_thread around the synchronous MediaDownloader.download, removing the blocking-in-async chimera (D1/4.5) while keeping identical download semantics.",
+      "tests": "TestGetDownloadInfo (None-pair contract); gate import + suite"
+    },
+    "downloader.py::main": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Identical control flow; get_bunkr_status moved to a worker thread. Single-URL CLI behavior unchanged.",
+      "tests": "gate import check"
+    },
+    "src/file_utils.py::format_directory_name": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Fixes the (name, None) case that previously returned None and crashed sanitize consumers with TypeError. Full truth table now: (None,None)->None, (None,id)->id, (name,None)->name, (name,id)->'name (id)'. Baseline guarantees for the other three cells preserved.",
+      "tests": "TestFormatDirectoryName.test_truth_table"
+    },
+    "src/general_utils.py::fetch_page": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "asyncio-native rewrite (aiohttp) of a blocking requests.get inside async def (D1 chimera). Preserved behavioral guarantees: 5 attempts, 40s-class timeout, FORBIDDEN -> one-shot fallback-domain retry, FETCH_ERROR_MESSAGES statuses (500/502) log + return None, BS4 parse from raw bytes on success, exponential backoff with jitter on retryable transport errors (ServerDisconnectedError, timeouts), immediate None on non-retryable ClientError. RemoteDisconnected (requests) mapped to aiohttp.ServerDisconnectedError handling. Nested baseline helper fetch_page.handle_response is TRANSLATED inline (see authorized_translations).",
+      "tests": "TestFetchPage (success, 500, 502, 403-fallback-then-None, ClientError, ServerDisconnectedError retry-exhaustion)"
+    },
+    "src/general_utils.py::get_root_path": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Same logic; Path import restored to module top level (was lazily imported inside the function by the in-flight revision); posix branch now returns str(cwd) matching the declared -> str annotation (baseline returned Path). shutil.disk_usage accepts both; callers treat it as an opaque path.",
+      "tests": "gate import check; check_disk_space exercised via suite"
+    },
+    "src/url_utils.py::check_url_type": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Valid URL classification unchanged (a->album True, f/i/v->False). The IndexError branch (URL too short to carry a type segment, e.g. 'https:') previously fell through to an UnboundLocalError crash; it now logs and exits 1, exactly matching the adjacent baseline behavior for unexpected type segments.",
+      "tests": "TestCheckUrlType (album, file, too-short exit, unknown-segment exit)"
+    },
+    "src/crawlers/api_utils.py::extract_file_id": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Same contract for pages carrying data-file-id; script tags without the attribute previously raised KeyError (crash), now return None, letting get_api_response fall through to the item-URL path.",
+      "tests": "TestExtractFileId (with, without attribute, without script)"
+    },
+    "src/crawlers/api_utils.py::get_api_response": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Signed-URL construction for jsCDN pages unchanged. Fixes two edge defects: (1) when neither jsCDN nor a direct-download URL exists but the sign API returns a token, the baseline returned the garbage string 'None?token=...'; now returns None. (2) when no token is issued but an unsigned direct-download URL was resolved, the baseline returned None and dropped it; now returns the unsigned URL so the download can be attempted (MediaDownloader retains its full retry/error machinery). jsCDN precedence over the unsigned URL is preserved.",
+      "tests": "TestGetApiResponse (signed URL, no-base no-garbage, unsigned fallback)"
+    },
+    "src/crawlers/crawler_utils.py::get_item_download_link": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Soup-supplied path (the production wiring) unchanged. The defensive soup-None fetch path now catches aiohttp.ClientError and asyncio.TimeoutError, logs, and returns None instead of propagating into callers that only catch requests exceptions (single-item mode previously crashed with an unhandled aiohttp traceback).",
+      "tests": "gate import check; TestGetDownloadInfo"
+    },
+    "src/crawlers/crawler_utils.py::get_item_filename": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Filename extraction, Cloudflare email decryption, and latin1->utf-8 mojibake repair unchanged. Missing h1 container previously raised AttributeError (crash); now logs and returns None so the item is skipped gracefully.",
+      "tests": "TestGetItemFilename (extract, missing container, cf-email ascii + multibyte)"
+    },
+    "src/crawlers/crawler_utils.py::get_download_info": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Success path (link + formatted filename via format_item_filename/get_url_based_filename) unchanged. Adds (None, None) early returns when the link or the filename is unresolvable; baseline fed None into DownloadInfo and crashed at truncate_filename/urlparse.",
+      "tests": "TestGetDownloadInfo (unresolvable link, unparsable filename, resolvable item)"
+    },
+    "src/downloaders/album_downloader.py::AlbumDownloader": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Class shell: docstring and imports only (BeautifulSoup import for the corrected annotation); no behavioral change.",
+      "tests": "gate import check"
+    },
+    "src/downloaders/album_downloader.py::AlbumDownloader.execute_item_download": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Download path unchanged (semaphore, add_task, fetch with retries, get_download_info, to_thread download, failed-download collection). Adds an explicit 'Item skipped' log for items with no resolvable link (baseline skipped silently after the (None,None) contract would have crashed).",
+      "tests": "TestAlbumDownloaderGather"
+    },
+    "src/downloaders/album_downloader.py::AlbumDownloader.download_album": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Preserves task registration, semaphore bounding, failed-download post-processing. Hardening: aggregate gather wrapped in asyncio.wait_for (7200s wall-clock ceiling) so a permanently hung item cannot wedge the orchestrator; return_exceptions=True collects item-level exceptions (logged as 'Item error') instead of aborting sibling tasks; TimeoutError logs 'Album timeout' and returns without processing failed downloads (cancelled album). On the normal path all baseline behaviors are intact.",
+      "tests": "TestAlbumDownloaderGather (exception collected + logged; timeout cancels + logs)"
+    },
+    "src/downloaders/album_downloader.py::AlbumDownloader._fetch_page_with_retries": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Logic unchanged (MAX_RETRIES attempts, progressive backoff, RuntimeError after final failure). Corrects the return annotation from -> None (a lie: the function returns BeautifulSoup or raises) to -> BeautifulSoup.",
+      "tests": "gate import check"
+    },
+    "src/downloaders/download_utils.py::save_file_with_progress": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Known-Content-Length behavior byte-for-byte preserved (chunk sizing, .temp staging, progress updates, move-on-complete, True-when-partial). Fixes: (1) Content-Length absent or unparsable no longer produces negative progress or an always-partial verdict - a clean end-of-stream is treated as complete (chunked transfer encoding) and progress updates are skipped; (2) unexpected mid-write exceptions unlink the orphaned .temp before re-raising (baseline left partial files on disk); (3) unparsable Content-Length header no longer raises ValueError at int().",
+      "tests": "TestSaveFileWithProgress (complete, partial, unknown-size, garbage length, OSError cleanup, ChunkedEncodingError partial, chunk-size thresholds)"
+    },
+    "src/downloaders/media_downloader.py::MediaDownloader": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Class shell: RequestsConnectionError import alias for the narrowed except clause in download(); no behavioral change to the class contract.",
+      "tests": "gate import check"
+    },
+    "src/downloaders/media_downloader.py::MediaDownloader.download": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "Control flow identical (offline final-attempt skip, truncate+path, skip checks, attempt_download, connection-error handling, failed-download handling, success summary). except clause narrowed from requests.exceptions.ConnectionError to the same class imported directly - same exception type, same handler.",
+      "tests": "TestHandleRequestException"
+    },
+    "src/downloaders/media_downloader.py::MediaDownloader._handle_request_exception": {
+      "verdict": "SUPERSET-PASS",
+      "rationale": "521/503 offline-marking, 429 retry-with-backoff, 502 stop-retry, other-status stop: all preserved. Fixes the mass false-positive defect: response is None (DNS failure, connection refused, SSL error, socket timeout) previously collapsed into the offline-mark branch, marking healthy subdomains offline for the whole session (1931+ domains in the field session log); now treated as transient network errors and retried with backoff.",
+      "tests": "TestHandleRequestException (network-error retry, 521 offline, 503 offline, 429 retry, 502 stop, other stop)"
+    }
+  },
+  "authorized_translations": {
+    "src/general_utils.py::fetch_page.handle_response": {
+      "disposition": "translated",
+      "target": "src/general_utils.py::fetch_page",
+      "rationale": "The nested helper's two behaviors - FETCH_ERROR_MESSAGES status logging + None return, and BeautifulSoup(content, 'html.parser') parsing from raw bytes - are inlined verbatim into the aiohttp-based fetch_page (status checks operate on response.status; parsing on await response.read()).",
+      "behavior_tests": "TestFetchPage.test_fetch_error_status_returns_none, TestFetchPage.test_success_returns_soup"
+    }
+  },
+  "authorized_removals": {
+    "src/general_utils.py::validate_download_link": {
+      "disposition": "authorized-retired",
+      "authorization": "WO-001: 'zero dead code, stubs, orphaned references'",
+      "evidence": "Zero call sites in baseline and candidate (call-graph search over all tracked Python files). The function was unreachable from every entry point (main.py, downloader.py). No operator-facing behavior depends on it.",
+      "risk": "None: unreachable code cannot lose capability."
+    },
+    "src/url_utils.py::get_item_type": {
+      "disposition": "authorized-retired",
+      "authorization": "WO-001: 'zero dead code, stubs, orphaned references'",
+      "evidence": "Zero call sites in baseline and candidate. Additionally carried a latent bug (caught AttributeError where split() raises IndexError), proving it was never executed.",
+      "risk": "None: unreachable code cannot lose capability."
+    }
+  }
+}
